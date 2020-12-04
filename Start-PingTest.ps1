@@ -1,4 +1,5 @@
-$ServerName = Get-Content "C:\Users\dsrobinson\OneDrive - hsconline\Documents\columbiapc.txt"
+#$ServerName = Get-Content "C:\Users\dsrobinson\OneDrive - hsconline\Documents\columbiapc.txt"
+$ServerName = 'DedicatedServer', 'Plex-PC', 'Downloading-PC'
 foreach ($Server in $ServerName)
 {
 if (Test-Connection -ComputerName $Server -Count 2 -Quiet )
@@ -222,7 +223,7 @@ foreach($User in $LoggedUser)
 {
 $currentUser = $User.UserName -replace "\\","/"
 $LoggedInUser = ([adsi]"WinNT://$currentUser,user").fullname
-"`t`t{0} ({1})`n" -f $LoggedInUser.ToString(), $User.UserName
+"`t`t{0} ({1}) - State: {2}`n" -f $LoggedInUser.ToString(), $User.UserName, $User.SessionState
 }
 }
 else
