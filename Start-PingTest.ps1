@@ -216,17 +216,18 @@ PARAMETER Logoff
  
     END {}
 }
+"$Server :: Online" -f $FinalResult
 $LoggedUser = Get-LoggedInUser -ComputerName $Server | Select-Object ComputerName, UserName, SessionState -Unique
 foreach($User in $LoggedUser)
 {
 $currentUser = $User.UserName -replace "\\","/"
-$LoggedInUser += (([adsi]"WinNT://$currentUser,user").fullname) + " (" + $User.UserName + ")"
+$LoggedInUser = ([adsi]"WinNT://$currentUser,user").fullname
+"`t`t{0} ({1})`n" -f $LoggedInUser.ToString(), $User.UserName
 }
-"$Server Online - {0} ({1})" -f $LoggedInUser
 }
 else
 {
-"$Server Offline"
+"$Server :: Offline"
 }     
         
 }
